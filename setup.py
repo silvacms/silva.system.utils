@@ -32,5 +32,20 @@ setup(name='silva.system.utils',
       zip_safe=False,
       install_requires=[
         'setuptools',
+        'argparse',
+        'zope.site',
+        'zope.location',
+        'zope.security',
+        'silva.core.interfaces',
+        'silva.core.services',
+        'infrae.wsgi',
         ],
+      entry_points = """
+      [console_scripts]
+      silva = silva.system.utils.script:script [script]
+      [silva.system.utils]
+      listing = silva.system.utils.commands.listing:ListingCommand
+      version = silva.system.utils.commands.version:CleanupVersionCommand
+      pack = silva.system.utils.commands.pack:PackCommand
+      """
       )
