@@ -15,7 +15,7 @@ class ListingCommand(object):
     def get_options(self, factory):
         parser = factory(
             'list',
-            help="list all Silva root in the database")
+            help="list all site in the database")
         parser.set_defaults(plugin=self)
 
     def run(self, root, options):

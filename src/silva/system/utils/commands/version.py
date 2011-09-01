@@ -11,29 +11,6 @@ import logging
 logger = logging.getLogger('silva.system')
 
 
-def purge_old_versions(root, keep):
-    count = 0
-    for count, content in enumerate(walk_silva_tree(root)):
-        if not IVersionedContent.providedBy(content):
-            continue
-        versions = content._previous_versions
-        if not versions:
-            continue
-        if count and count % 500 == 0:
-            # Commit now and when
-            transaction.commit()
-
-        removable_versions = versions[:-keep]
-        content._previous_versions = versions[-keep:]
-
-        contained_ids = content.objectIds()
-        removable_version_ids = set([
-            str(version[0]) for version in removable_versions
-            if version[0] in contained_ids])
-
-        content.manage_delObjects(list(removable_version_ids))
-
-
 class CleanupVersionCommand(object):
     """Clean old Silva versions.
     """
@@ -41,7 +18,7 @@ class CleanupVersionCommand(object):
 
     def get_options(self, factory):
         parser = factory(
-            'version',
+            'clean_version',
             help="clean old version of versioned content")
         parser.add_argument(
             "--keep", type=int, default=1,
@@ -54,7 +31,35 @@ class CleanupVersionCommand(object):
     def run(self, root, options):
         if options.keep < 1:
             fail("You need to keep at least one version")
-        logger.info('Removing old versions')
-        purge_old_versions(root, options.keep)
-        transaction.commit()
+        logger.info('Removing old versions ...')
+        removed = 0
+        count = 0
+        for count, content in enumerate(walk_silva_tree(root)):
+            if not IVersionedContent.providedBy(content):
+                continue
+            versions = content._previous_versions
+            if not versions:
+                continue
+            if count and count % 500 == 0:
+                # Commit now and when
+                transaction.commit()
+
+            removable_versions = versions[:-options.keep]
+            content._previous_versions = versions[-options.keep:]
+
+            contained_ids = content.objectIds()
+            removable_version_ids = set([
+                str(version[0]) for version in removable_versions
+                if version[0] in contained_ids])
+            removed += len(removable_version_ids)
+
+            content.manage_delObjects(list(removable_version_ids))
+
+            if removed and removed % 500 == 0:
+                logger.info('Removed %d versions, continuing ...' % removed)
+        if removed:
+            logger.info('Removed %d versions in total' % removed)
+            transaction.commit()
+        else:
+            logger.info('Nothing removed')
 

@@ -125,6 +125,7 @@ def get_options():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
         "-c", "--config",
+        default='parts/instance/etc/zope.conf',
         help="Zope configuration file path")
     parser.add_argument(
         "--debug", action="store_true",
