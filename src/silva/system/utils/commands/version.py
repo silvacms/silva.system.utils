@@ -4,7 +4,7 @@
 
 from silva.core.services.utils import walk_silva_tree
 from silva.core.interfaces import IVersionedContent
-from silva.system.utils.script import fail, NEED_SILVA_RUNNING
+from silva.system.utils.script import fail, NEED_SILVA_SESSION
 import transaction
 import logging
 
@@ -14,7 +14,7 @@ logger = logging.getLogger('silva.system')
 class CleanupVersionCommand(object):
     """Clean old Silva versions.
     """
-    flags = NEED_SILVA_RUNNING
+    flags = NEED_SILVA_SESSION
 
     def get_options(self, factory):
         parser = factory(

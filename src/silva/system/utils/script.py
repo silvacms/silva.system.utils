@@ -41,13 +41,13 @@ def fail(message):
     sys.exit(1)
 
 NEED_ZOPE_RUNNING = 1
-NEED_SILVA_RUNNING = NEED_ZOPE_RUNNING | 2
+NEED_ZOPE_SESSION = NEED_ZOPE_RUNNING | 2
+NEED_SILVA_SESSION = NEED_ZOPE_SESSION | 4
 
 
 def default_arg_generator(options):
     setup_logging(options)
     yield options
-
 
 def zope_boot_arg_generator(parent):
     options = parent.next()
@@ -57,15 +57,27 @@ def zope_boot_arg_generator(parent):
 
     boot_zope(options.config, debug_mode=options.debug)
 
-    newInteraction()
-    newSecurityManager(None, AccessControl.User.system)
-    Zope2.zpublisher_transactions_manager.begin()
-    root = makerequest(Zope2.bobo_application())
-
     def close():
         Zope2.DB.close()
 
     atexit.register(close)
+
+    yield Zope2.DB, options
+
+    try:
+        parent.next()
+    except StopIteration:
+        pass
+    else:
+        fail(u"internal error")
+
+def zope_session_arg_generator(parent):
+    db, options = parent.next()
+
+    newInteraction()
+    newSecurityManager(None, AccessControl.User.system)
+    Zope2.zpublisher_transactions_manager.begin()
+    root = makerequest(Zope2.bobo_application())
 
     yield root, options
 
@@ -78,8 +90,7 @@ def zope_boot_arg_generator(parent):
     else:
         fail(u"internal error")
 
-
-def silva_root_arg_generator(parent):
+def silva_session_arg_generator(parent):
     root, options = parent.next()
 
     if not hasattr(options, 'paths') or not len(options.paths):
@@ -109,7 +120,8 @@ def silva_root_arg_generator(parent):
 
 
 ARGS_GENERATORS = [(NEED_ZOPE_RUNNING, zope_boot_arg_generator),
-                   (NEED_SILVA_RUNNING, silva_root_arg_generator)]
+                   (NEED_ZOPE_SESSION, zope_session_arg_generator),
+                   (NEED_SILVA_SESSION, silva_session_arg_generator)]
 
 
 def get_plugins():

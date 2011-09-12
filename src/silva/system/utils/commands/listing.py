@@ -2,7 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-from silva.system.utils.script import NEED_ZOPE_RUNNING
+from silva.system.utils.script import NEED_ZOPE_SESSION
 from silva.core.interfaces import IRoot
 import logging
 
@@ -10,7 +10,7 @@ logger = logging.getLogger('silva.system')
 
 
 class ListingCommand(object):
-    flags = NEED_ZOPE_RUNNING
+    flags = NEED_ZOPE_SESSION
 
     def get_options(self, factory):
         parser = factory(

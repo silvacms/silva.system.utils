@@ -21,10 +21,10 @@ class PackCommand(object):
             help="number of days to keep")
         parser.set_defaults(plugin=self)
 
-    def run(self, root, options):
+    def run(self, db, options):
         if options.days < 0:
             fail("Cannot pack in the future.")
         logger.info('Packing root database ...')
-        root._p_jar.db().pack(time.time()-options.days*86400)
+        db.pack(time.time()-options.days*86400)
 
 
