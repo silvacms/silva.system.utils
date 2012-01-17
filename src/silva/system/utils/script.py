@@ -74,10 +74,10 @@ def zope_boot_arg_generator(parent):
 def zope_session_arg_generator(parent):
     db, options = parent.next()
 
-    newInteraction()
     newSecurityManager(None, AccessControl.User.system)
     Zope2.zpublisher_transactions_manager.begin()
     root = makerequest(Zope2.bobo_application())
+    newInteraction()
 
     yield root, options
 
@@ -108,6 +108,13 @@ def silva_session_arg_generator(parent):
         else:
             setSite(None)
         setHooks()
+
+        if hasattr(options, 'username') and options.username:
+            user = silva.acl_users.getUser(options.username)
+            if user.getUserName() is None:
+                fail("%s is not a valid user in the Silva root %s" % (
+                        options.username, path))
+            newSecurityManager(None, user)
 
         yield silva, options
 
