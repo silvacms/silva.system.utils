@@ -23,7 +23,7 @@ class ConvertFileCommand(object):
             'convert_files',
             help="convert file storage")
         parser.add_argument(
-            "-u", "--user",
+            "-u", "--username",
             help="username to login in order to convert files")
         parser.add_argument(
             "paths", nargs="+",
