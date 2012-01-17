@@ -22,6 +22,9 @@ class ConvertFileCommand(object):
         parser = factory(
             'convert_files',
             help="convert file storage")
+        parser.add_argument(
+            "paths", nargs="+",
+            help="path to Silva sites to work on")
         parser.set_defaults(plugin=self)
 
     def run(self, root, options):
