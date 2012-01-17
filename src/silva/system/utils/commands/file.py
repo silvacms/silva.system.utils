@@ -19,9 +19,10 @@ class ConvertFileCommand(object):
     flags = NEED_SILVA_SESSION
 
     def get_options(self, factory):
-        factory(
+        parser = factory(
             'convert_files',
             help="convert file storage")
+        parser.set_defaults(plugin=self)
 
     def run(self, root, options):
         logger.info("Converting files.")
