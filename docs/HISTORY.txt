@@ -4,7 +4,10 @@ Changes
 1.1 (unreleased)
 ----------------
 
-- ...
+- Add a command to convert file storage from the command line.
+
+- Commands now support to run actions in a Silva site with a logged
+  user.
 
 1.0 (2011/11/10)
 ----------------
