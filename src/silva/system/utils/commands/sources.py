@@ -50,8 +50,11 @@ class FindSourcesCommand(object):
                 options.identifier,
                 '/'.join(root.getPhysicalPath())))
 
-        for count, content in enumerate(walk_silva_tree(root)):
+        documents = 0
+        for content in walk_silva_tree(root):
             if not IDocument.providedBy(content):
                 continue
+            documents += 1
             self.inspect(content.get_viewable(), options.identifier)
             self.inspect(content.get_editable(), options.identifier)
+        logger.info('Verified %d documents' % documents)
