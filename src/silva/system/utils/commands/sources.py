@@ -38,16 +38,16 @@ class FindSourcesCommand(object):
     def get_options(self, factory):
         parser = factory(
             'find_sources',
-            help='find documents that uses a source')
+            help='find code sources')
         parser.add_argument(
             "-u", "--username",
             help="username to login in order to convert files")
         parser.add_argument(
             "-i", "--identifier",
-            help="source identifier to look for")
+            help="find document that uses that source")
         parser.add_argument(
             "-f", "--folder",
-            help="sub folder to look for")
+            help="folder to restrict the search to")
         parser.add_argument(
             "paths", nargs="+",
             help="path to Silva sites to work on")
@@ -91,4 +91,3 @@ class FindSourcesCommand(object):
             self.find_existing_sources(root)
         else:
             self.find_document_sources(root, options.identifier)
-
