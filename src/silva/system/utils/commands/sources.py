@@ -33,12 +33,12 @@ class FindSourcesCommand(object):
 
     def inspect(self, version, identifier):
         if version is not None:
-            for node in version.content.documentElement.childNodes:
-                if node.nodeName == 'source':
-                    if node.attributes['id'] == identifier:
-                        logger.error('Document %s uses source %s' % (
-                                '/'.join(version.getPhysicalPath()),
-                                identifier))
+            root = version.content.documentElement
+            for node in root.getElementsByTagName('source'):
+                if node.attributes['id'] == identifier:
+                    logger.warn('Document %s uses source %s' % (
+                            '/'.join(version.getPhysicalPath()),
+                            identifier))
 
     def run(self, root, options):
         if not options.identifier:
@@ -46,7 +46,8 @@ class FindSourcesCommand(object):
         if options.folder:
             root = root.restrictedTraverse(options.folder)
 
-        logger.info('Finding documents in %s' % (
+        logger.info('Finding documents with source %s in %s' % (
+                options.identifier,
                 '/'.join(root.getPhysicalPath())))
 
         for count, content in enumerate(walk_silva_tree(root)):
