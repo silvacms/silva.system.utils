@@ -36,7 +36,7 @@ class FindSourcesCommand(object):
             root = version.content.documentElement
             for node in root.getElementsByTagName('source'):
                 if node.attributes['id'].nodeValue == identifier:
-                    logger.warn('Document %s uses source %s' % (
+                    logger.warn("Document '%s' uses source '%s'." % (
                             '/'.join(version.getPhysicalPath()),
                             identifier))
 
@@ -46,7 +46,7 @@ class FindSourcesCommand(object):
         if options.folder:
             root = root.restrictedTraverse(options.folder)
 
-        logger.info('Finding documents with source %s in %s' % (
+        logger.info("Finding documents with source '%s' in '%s'." % (
                 options.identifier,
                 '/'.join(root.getPhysicalPath())))
 
@@ -57,4 +57,4 @@ class FindSourcesCommand(object):
             documents += 1
             self.inspect(content.get_viewable(), options.identifier)
             self.inspect(content.get_editable(), options.identifier)
-        logger.info('Verified %d documents' % documents)
+        logger.info('Verified %d documents.' % documents)
