@@ -31,22 +31,26 @@ class FindSourcesCommand(object):
             help="path to Silva sites to work on")
         parser.set_defaults(plugin=self)
 
+    def inspect(self, version, identifier):
+        if version is not None:
+            for node in version.content.documentElement.childNodes:
+                if node.nodeName == 'source':
+                    if node.attributes['id'] == identifier:
+                        logger.error('Document %s uses source %s' % (
+                                '/'.join(version.getPhysicalPath()),
+                                identifier))
+
     def run(self, root, options):
         if not options.identifier:
             fail(u"Please provide a source identifier.")
-        logger.info('Finding documents')
-
         if options.folder:
             root = root.restrictedTraverse(options.folder)
+
+        logger.info('Finding documents in %s' % (
+                '/'.join(root.getPhysicalPath())))
 
         for count, content in enumerate(walk_silva_tree(root)):
             if not IDocument.providedBy(content):
                 continue
-            version = content.get_viewable()
-            if version is not None:
-                for node in version.content.documentElement.childNodes:
-                    if node.nodeName == 'source':
-                        if node.attributes['id'] == options.identifier:
-                            logger.error('Document %s uses source %s' % (
-                                    '/'.join(content.getPhysicalPath()),
-                                    options.identifier))
+            self.inspect(content.get_viewable(), options.identifier)
+            self.inspect(content.get_editable(), options.identifier)
