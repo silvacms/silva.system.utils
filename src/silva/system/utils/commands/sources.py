@@ -1,9 +1,10 @@
 
 import logging
 
-from silva.system.utils.script import NEED_SILVA_SESSION, fail
-from silva.core.services.utils import walk_silva_tree
+from Products.SilvaExternalSources.interfaces import ICodeSource
 from Products.SilvaDocument.interfaces import IDocument
+from silva.core.services.utils import walk_silva_tree
+from silva.system.utils.script import NEED_SILVA_SESSION
 
 logger = logging.getLogger('silva.system')
 
@@ -31,7 +32,31 @@ class FindSourcesCommand(object):
             help="path to Silva sites to work on")
         parser.set_defaults(plugin=self)
 
-    def inspect(self, version, identifier):
+    def find_existing_sources(self, root):
+        logger.info("Finding sources in '%s'." % (
+                '/'.join(root.getPhysicalPath())))
+        sources = 0
+        for content in walk_silva_tree(root):
+            if ICodeSource.providedBy(content):
+                logger.warn("Found source '%s'." % (
+                        '/'.join(content.getPhysicalPath())))
+                sources += 1
+        logger.info('Found %d sources.' % sources)
+
+    def find_document_sources(self, root, identifier):
+        logger.info("Finding documents with source '%s' in '%s'." % (
+                identifier,
+                '/'.join(root.getPhysicalPath())))
+        documents = 0
+        for content in walk_silva_tree(root):
+            if not IDocument.providedBy(content):
+                continue
+            documents += 1
+            self.inspect_document(content.get_viewable(), identifier)
+            self.inspect_document(content.get_editable(), identifier)
+        logger.info('Verified %d documents.' % documents)
+
+    def inspect_document(self, version, identifier):
         if version is not None:
             root = version.content.documentElement
             for node in root.getElementsByTagName('source'):
@@ -41,20 +66,11 @@ class FindSourcesCommand(object):
                             identifier))
 
     def run(self, root, options):
-        if not options.identifier:
-            fail(u"Please provide a source identifier.")
         if options.folder:
             root = root.restrictedTraverse(options.folder)
 
-        logger.info("Finding documents with source '%s' in '%s'." % (
-                options.identifier,
-                '/'.join(root.getPhysicalPath())))
+        if not options.identifier:
+            self.find_existing_sources(root)
+        else:
+            self.find_document_sources(root, options.identifier)
 
-        documents = 0
-        for content in walk_silva_tree(root):
-            if not IDocument.providedBy(content):
-                continue
-            documents += 1
-            self.inspect(content.get_viewable(), options.identifier)
-            self.inspect(content.get_editable(), options.identifier)
-        logger.info('Verified %d documents.' % documents)
