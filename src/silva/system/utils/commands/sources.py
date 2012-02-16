@@ -46,7 +46,7 @@ class FindSourcesCommand(object):
             if version is not None:
                 for node in version.content.documentElement.childNodes:
                     if node.nodeName == 'source':
-                        if node.attr.id == options.identifier:
+                        if node.attributes['id'] == options.identifier:
                             logger.error('Document %s uses source %s' % (
                                     '/'.join(content.getPhysicalPath()),
                                     options.identifier))
