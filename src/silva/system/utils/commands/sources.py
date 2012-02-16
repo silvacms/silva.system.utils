@@ -73,14 +73,33 @@ class FindSourcesCommand(object):
             self.inspect_document(document.get_editable(), identifier)
         logger.info('Verified %d documents.' % documents)
 
-    def inspect_document(self, version, identifier):
-        if version is not None:
-            root = version.content.documentElement
-            for node in root.getElementsByTagName('source'):
-                if node.attributes['id'].nodeValue == identifier:
-                    logger.warn("Document version '%s' uses source '%s'." % (
-                            '/'.join(version.getPhysicalPath()),
-                            identifier))
+    def inspect_document(self, document, identifier):
+        public = document.get_public_version()
+        if public is not None:
+            version = document._getOb(public, None)
+            if version is None:
+                logger.error(
+                    "Broken document, missing expected public version in %s" % (
+                        "/".join(document.getPhysicalPath())))
+            else:
+                self.inspect_version(version, identifier)
+        editable = document.get_unapproved_version()
+        if editable is not None:
+            version = document._getOb(editable, None)
+            if version is None:
+                logger.error(
+                    "Broken document, missing expected editable version in %s" % (
+                        "/".join(document.getPhysicalPath())))
+            else:
+                self.inspect_version(version, identifier)
+
+    def inspect_version(self, version, identifier):
+        root = version.content.documentElement
+        for node in root.getElementsByTagName('source'):
+            if node.attributes['id'].nodeValue == identifier:
+                logger.warn("Document version '%s' uses source '%s'." % (
+                        '/'.join(version.getPhysicalPath()),
+                        identifier))
 
     def run(self, root, options):
         if options.folder:
