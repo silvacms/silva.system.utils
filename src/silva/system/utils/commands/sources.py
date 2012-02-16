@@ -36,7 +36,7 @@ class FindSourcesCommand(object):
             root = version.content.documentElement
             for node in root.getElementsByTagName('source'):
                 if node.attributes['id'].nodeValue == identifier:
-                    logger.warn("Document '%s' uses source '%s'." % (
+                    logger.warn("Document version '%s' uses source '%s'." % (
                             '/'.join(version.getPhysicalPath()),
                             identifier))
 
