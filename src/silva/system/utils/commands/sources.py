@@ -69,8 +69,7 @@ class FindSourcesCommand(object):
         documents = 0
         for document in walk_silva_tree(root, requires=IDocument):
             documents += 1
-            self.inspect_document(document.get_viewable(), identifier)
-            self.inspect_document(document.get_editable(), identifier)
+            self.inspect_document(document, identifier)
         logger.info('Verified %d documents.' % documents)
 
     def inspect_document(self, document, identifier):
