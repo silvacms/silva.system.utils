@@ -17,11 +17,10 @@ def walk_silva_tree(content, requires=ISilvaObject):
     """
     count = 0
     if requires.providedBy(content):
-        # Version are indexed by the versioned content itself
         yield content
     if IContainer.providedBy(content):
         for child in content.objectValues():
-            for content in walk_silva_tree(child):
+            for content in walk_silva_tree(child, requires=requires):
                 count += 1
                 yield content
                 if count > THRESHOLD:
