@@ -49,5 +49,6 @@ setup(name='silva.system.utils',
       clear_version = silva.system.utils.commands.version:CleanupVersionCommand
       convert_files = silva.system.utils.commands.file:ConvertFileCommand
       pack = silva.system.utils.commands.pack:PackCommand
+      find_sources = silva.system.utils.commands.sources:FindSourcesCommand
       """
       )

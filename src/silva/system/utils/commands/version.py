@@ -21,11 +21,11 @@ class CleanupVersionCommand(object):
             'clean_version',
             help="clean old version of versioned content")
         parser.add_argument(
-            "--keep", type=int, default=1,
-            help="number of previous version to keep")
-        parser.add_argument(
             "-u", "--username",
             help="username to login in order to convert files")
+        parser.add_argument(
+            "--keep", type=int, default=1,
+            help="number of previous version to keep")
         parser.add_argument(
             "paths", nargs="+",
             help="path to Silva sites to work on")
