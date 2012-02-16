@@ -36,6 +36,9 @@ class FindSourcesCommand(object):
             fail(u"Please provide a source identifier.")
         logger.info('Finding documents')
 
+        if options.folder:
+            root = root.restrictedTraverse(options.folder)
+
         for count, content in enumerate(walk_silva_tree(root)):
             if not IDocument.providedBy(content):
                 continue
