@@ -1,10 +1,14 @@
 Changes
 =======
 
-1.1 (unreleased)
+1.1 (2012/02/23)
 ----------------
 
+This is a Silva 2.3 compatible only release.
+
 - Add a command to convert file storage from the command line.
+
+- Add a command to find code sources, and where they are found.
 
 - Commands now support to run actions in a Silva site with a logged
   user.

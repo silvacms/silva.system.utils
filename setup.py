@@ -5,7 +5,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.1dev'
+version = '1.1'
 
 setup(name='silva.system.utils',
       version=version,
@@ -32,11 +32,14 @@ setup(name='silva.system.utils',
       zip_safe=False,
       install_requires=[
         'Zope2',
+        'Products.Silva >= 2.3.6, < 3.0',
         'argparse',
         'infrae.wsgi',
         'setuptools',
         'silva.core.interfaces',
         'silva.core.services',
+        'silva.core.upgrade',
+        'zope.component',
         'zope.location',
         'zope.security',
         'zope.site',
