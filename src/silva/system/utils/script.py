@@ -11,6 +11,8 @@ import pdb
 from pkg_resources import iter_entry_points
 
 from AccessControl.SecurityManagement import newSecurityManager
+from Acquisition import aq_parent
+from OFS.interfaces import IObjectManager
 from Testing.makerequest import makerequest
 from infrae.wsgi.paster import boot_zope
 from silva.core.interfaces import IRoot
@@ -90,6 +92,17 @@ def zope_session_arg_generator(parent):
     else:
         fail(u"internal error")
 
+
+def zope_find_user(container, username):
+    while IObjectManager.providedBy(container):
+        if container._getOb('acl_users', None) is not None:
+            user = container.acl_users.getUser(username)
+            if user is not None and user.getUserName() is not None:
+                return user.__of__(container.acl_users)
+        container = aq_parent(container)
+    fail("%s is not a valid user." % username)
+
+
 def silva_session_arg_generator(parent):
     root, options = parent.next()
 
@@ -110,10 +123,8 @@ def silva_session_arg_generator(parent):
         setHooks()
 
         if hasattr(options, 'username') and options.username:
-            user = silva.acl_users.getUser(options.username)
-            if user is None or user.getUserName() is None:
-                fail("%s is not a valid user in the Silva root %s" % (
-                        options.username, path))
+            user = zope_find_user(silva, options.username)
+            import pdb; pdb.set_trace()
             newSecurityManager(None, user)
 
         yield silva, options
