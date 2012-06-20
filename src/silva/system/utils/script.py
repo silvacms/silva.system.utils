@@ -111,7 +111,7 @@ def silva_session_arg_generator(parent):
 
         if hasattr(options, 'username') and options.username:
             user = silva.acl_users.getUser(options.username)
-            if user.getUserName() is None:
+            if user is None or user.getUserName() is None:
                 fail("%s is not a valid user in the Silva root %s" % (
                         options.username, path))
             newSecurityManager(None, user)
