@@ -124,7 +124,6 @@ def silva_session_arg_generator(parent):
 
         if hasattr(options, 'username') and options.username:
             user = zope_find_user(silva, options.username)
-            import pdb; pdb.set_trace()
             newSecurityManager(None, user)
 
         yield silva, options
