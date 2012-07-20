@@ -2,13 +2,10 @@
 import logging
 
 from silva.system.utils.script import NEED_SILVA_SESSION
-from silva.core.upgrade.upgrade import UpgradeRegistry, AnyMetaType
 from silva.core.services.interfaces import IFilesService
 from zope.component import getUtility
 import transaction
 
-from Products.Silva.File.service import StorageConverterHelper, FileStorageConverter
-from Products.Silva.Image.content import ImageStorageConverter
 
 logger = logging.getLogger('silva.system')
 
@@ -34,11 +31,7 @@ class ConvertFileCommand(object):
         logger.info("Converting files.")
 
         service = getUtility(IFilesService)
-        upgrader = UpgradeRegistry()
-        upgrader.register(StorageConverterHelper(root), '0.1', AnyMetaType)
-        upgrader.register(FileStorageConverter(service), '0.1', 'Silva File')
-        upgrader.register(ImageStorageConverter(service), '0.1', 'Silva Image')
-        upgrader.upgradeTree(root, '0.1')
+        service.convert_storage(root)
         logger.info("Done.")
         transaction.commit()
 
