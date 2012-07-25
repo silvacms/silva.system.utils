@@ -31,9 +31,14 @@ def setup_logging(options):
     if options.debug:
         level = logging.DEBUG
     logger.setLevel(level)
+    formatter = logging.Formatter(fmt='%(levelname)s: %(message)s')
     handler = logging.StreamHandler(sys.stdout)
-    handler.setFormatter(logging.Formatter(fmt='%(levelname)s: %(message)s'))
+    handler.setFormatter(formatter)
     logger.addHandler(handler)
+    if options.log:
+        handler = logging.FileHandler(options.log)
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
 
 
 def fail(message):
@@ -159,6 +164,9 @@ def get_options():
     parser.add_argument(
         "--debug", action="store_true",
         help="run in debug mode")
+    parser.add_argument(
+        "--log", action="store",
+        help="store logs in a file")
     subparser = parser.add_subparsers(
         title="commands")
 
