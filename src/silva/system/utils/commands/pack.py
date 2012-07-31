@@ -24,7 +24,7 @@ class PackCommand(object):
     def run(self, db, options):
         if options.days < 0:
             fail("Cannot pack in the future.")
-        logger.info('Packing root database ...')
+        logger.info('Packing root database, keeping %d days ...', options.days)
         db.pack(time.time()-options.days*86400)
 
 
