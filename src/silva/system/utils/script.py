@@ -41,9 +41,11 @@ def setup_logging(options):
         logger.addHandler(handler)
 
 
-def fail(message):
+def fail(message, *args):
     """Fail.
     """
+    if args:
+        message = message % args
     sys.stderr.write('ERROR: ' + message + '\n')
     sys.exit(1)
 

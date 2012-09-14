@@ -48,9 +48,9 @@ setup(name='silva.system.utils',
       [console_scripts]
       silva = silva.system.utils.script:script [script]
       [silva.system.utils]
-      listing = silva.system.utils.commands.listing:ListingCommand
-      clear_version = silva.system.utils.commands.version:CleanupVersionCommand
-      convert_files = silva.system.utils.commands.file:ConvertFileCommand
+      manage = silva.system.utils.commands.manage:ManageCommand
       pack = silva.system.utils.commands.pack:PackCommand
+      files = silva.system.utils.commands.files:FilesCommand
+      clear_version = silva.system.utils.commands.version:CleanupVersionCommand
       """
       )

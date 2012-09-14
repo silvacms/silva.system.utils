@@ -17,14 +17,22 @@ class PackCommand(object):
             'pack',
             help="pack a root database")
         parser.add_argument(
+            '--name', default="main",
+            help="database name to pack")
+        parser.add_argument(
             "--days", type=int, default=3,
             help="number of days to keep")
         parser.set_defaults(plugin=self)
 
     def run(self, db, options):
         if options.days < 0:
-            fail("Cannot pack in the future.")
-        logger.info('Packing root database, keeping %d days ...', options.days)
+            fail(u'Cannot pack in the future.')
+        db = db.databases.get(options.name)
+        if db is None:
+            fail(u'Unknown database "%s", cannot pack it.', options.name)
+        logger.info(
+            u'Packing "%s" database, keeping %d days ...',
+            options.name, options.days)
         db.pack(time.time()-options.days*86400)
 
 

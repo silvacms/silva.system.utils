@@ -13,14 +13,17 @@ import transaction
 logger = logging.getLogger('silva.system')
 
 
-class ConvertFileCommand(object):
+class FilesCommand(object):
     """Call the convert file command.
     """
     flags = NEED_SILVA_SESSION
 
     def get_options(self, factory):
         parser = factory(
-            'convert_files',
+            'files',
+            help="manage Silva files inside a Silva site")
+        parser.add_argument(
+            "--convert", action="store_true",
             help="convert file storage")
         parser.add_argument(
             "-u", "--username",
@@ -31,11 +34,11 @@ class ConvertFileCommand(object):
         parser.set_defaults(plugin=self)
 
     def run(self, root, options):
-        logger.info("Converting files.")
-
-        service = getUtility(IFilesService)
-        service.convert_storage(root)
-        logger.info("Done.")
-        transaction.commit()
+        if options.convert:
+            logger.info("Converting file storage.")
+            service = getUtility(IFilesService)
+            service.convert_storage(root)
+            logger.info("File storage converted.")
+            transaction.commit()
 
 
