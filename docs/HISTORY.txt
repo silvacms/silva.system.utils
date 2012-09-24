@@ -1,10 +1,20 @@
 Changes
 =======
 
-1.2 (unreleased)
+1.2 (2012/09/24)
 ----------------
 
-- ...
+This is a Silva 3.0 compatible only release.
+
+- Update API to convert file storage.
+
+- Improve pack command.
+
+- Add a command to create a new Silva root, install documentation and
+  add user to it.
+
+- Add a generic log option.
+
 
 1.1 (2012/02/23)
 ----------------
