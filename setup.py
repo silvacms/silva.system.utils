@@ -52,5 +52,7 @@ setup(name='silva.system.utils',
       pack = silva.system.utils.commands.pack:PackCommand
       files = silva.system.utils.commands.files:FilesCommand
       clear_version = silva.system.utils.commands.version:CleanupVersionCommand
+      export_zexp = silva.system.utils.commands.zexp:ExportZEXPCommand
+      import_zexp = silva.system.utils.commands.zexp:ImportZEXPCommand
       """
       )
