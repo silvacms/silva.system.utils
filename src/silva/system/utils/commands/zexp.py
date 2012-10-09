@@ -76,3 +76,4 @@ class ImportZEXPCommand(object):
             logger.info('inserting content at %s...',
                 "/".join(import_root.getPhysicalPath()) + path)
             import_root._setObject(content_id, content)
+            content.id = content_id
