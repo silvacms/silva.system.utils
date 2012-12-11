@@ -5,19 +5,19 @@ silva.system.utils
 Introduction
 ============
 
-Script to help to manage Silva sites from the command line. You can
-find a script in your bin directory of your installation called
-``silva``.
+This extension provides a script to help you manage Silva sites in the
+Zope instance from the command line. This will add script into the
+``bin`` directory of your installation called ``silva``.
 
-For most of the operations you need to provide the Zope 2
-configuration file with the option ``-c``.
+For most of the operations, the script requires you to provide the
+Zope 2 configuration file with the option ``-c``.
 
-By default you can with this screen, view the Silva site in the root
-of your database, create and delete Silva sites, and users to them,
-pack your database, and remove old versions of versioned content.
+By default you can , view the Silva site in the root of your database,
+create and delete Silva sites, and users to them, pack your database,
+and remove old versions of versioned content.
 
-The script is however pluggable. An another default plugin let you to
-upgrade a Silva site.
+The script is however pluggable. An another default command provided
+by ``silva.core.upgrade`` extension let you to upgrade a Silva site.
 
 Default commands
 ================
