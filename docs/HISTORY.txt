@@ -1,10 +1,10 @@
 Changes
 =======
 
-1.3 (unreleased)
+1.3 (2012/12/11)
 ----------------
 
-- ...
+- Add ``zexp_import`` and ``zexp_export`` commands.
 
 1.2 (2012/09/24)
 ----------------

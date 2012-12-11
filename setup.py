@@ -5,7 +5,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.3dev'
+version = '1.3'
 
 setup(name='silva.system.utils',
       version=version,
@@ -32,7 +32,7 @@ setup(name='silva.system.utils',
       zip_safe=False,
       install_requires=[
         'Zope2',
-        'Products.Silva >= 2.3.6, < 3.0',
+        'Products.Silva >= 3.0c1',
         'argparse',
         'infrae.wsgi',
         'setuptools',
@@ -51,8 +51,8 @@ setup(name='silva.system.utils',
       manage = silva.system.utils.commands.manage:ManageCommand
       pack = silva.system.utils.commands.pack:PackCommand
       files = silva.system.utils.commands.files:FilesCommand
-      clear_version = silva.system.utils.commands.version:CleanupVersionCommand
-      export_zexp = silva.system.utils.commands.zexp:ExportZEXPCommand
-      import_zexp = silva.system.utils.commands.zexp:ImportZEXPCommand
+      versions = silva.system.utils.commands.version:CleanupVersionCommand
+      zexp_export = silva.system.utils.commands.zexp:ExportZEXPCommand
+      zexp_import = silva.system.utils.commands.zexp:ImportZEXPCommand
       """
       )

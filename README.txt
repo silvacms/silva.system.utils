@@ -19,6 +19,43 @@ pack your database, and remove old versions of versioned content.
 The script is however pluggable. An another default plugin let you to
 upgrade a Silva site.
 
+Default commands
+================
+
+``manage``
+   Manage Silva sites:
+
+   - List existing Silva sites,
+
+   - Add a new Silva site,
+
+   - Delete an existing Silva site,
+
+   - Install documentation into an existing Silva site,
+
+   - Add a user into an existing Silva site.
+
+   Multiple actions can done at the same time: you can create a new
+   Silva, install the documentation and add a user to it.
+
+``pack``
+   Pack a database. The database ``name`` and the number of ``days``
+   to pack can be provided on the command line.
+
+``files``
+   Convert Silva file storage accordingly to the service files
+   settings.
+
+``versions``
+   Delete old closed versions from versioned content. The number of
+   version to keep is configurable.
+
+``zexp_export``
+   Export content into a ZEXP file.
+
+``zexp_import``
+   Import a ZEXP file.
+
 Code repository
 ===============
 

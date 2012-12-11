@@ -18,7 +18,7 @@ class CleanupVersionCommand(object):
 
     def get_options(self, factory):
         parser = factory(
-            'clean_version',
+            'versions',
             help="clean old version of versioned content")
         parser.add_argument(
             "--keep", type=int, default=1,
