@@ -46,7 +46,7 @@ setup(name='silva.system.utils',
         ],
       entry_points = """
       [console_scripts]
-      silva = silva.system.utils.script:script [script]
+      silva = silva.system.utils.script:script
       [silva.system.utils]
       manage = silva.system.utils.commands.manage:ManageCommand
       pack = silva.system.utils.commands.pack:PackCommand
@@ -54,5 +54,6 @@ setup(name='silva.system.utils',
       versions = silva.system.utils.commands.version:CleanupVersionCommand
       zexp_export = silva.system.utils.commands.zexp:ExportZEXPCommand
       zexp_import = silva.system.utils.commands.zexp:ImportZEXPCommand
+      xml_import = silva.system.utils.commands.xml:XmlImportCommand
       """
       )
