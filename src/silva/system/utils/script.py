@@ -197,8 +197,8 @@ def script():
             options.plugin.run(*args)
         except Exception, error:
             if options.debug:
-                print "%s:" % sys.exc_info()[0]
-                print sys.exc_info()[1]
+                print "%s:" % (sys.exc_info()[0]).encode('utf-8')
+                print (sys.exc_info()[1]).encode('utf-8')
                 pdb.post_mortem(sys.exc_info()[2])
             raise error
 
