@@ -1,11 +1,8 @@
 
-from StringIO import StringIO
-from zipfile import ZipFile
-
-from zope.publisher.browser import TestRequest
-from Products.Silva.silvaxml.xmlimport import importFromFile
-from silva.system.utils.script import NEED_SILVA_SESSION
 from silva.core.interfaces import IContainer
+from silva.core.xml import ZipImporter
+from silva.system.utils.script import NEED_SILVA_SESSION
+from zope.publisher.browser import TestRequest
 
 import logging
 
@@ -47,11 +44,8 @@ class XmlImportCommand(object):
             logger.error('invalid import base, not a container.')
             exit(1)
 
-        with open(options.file, 'r') as f:
-            source_zip = ZipFile(f)
-            import_file = StringIO(source_zip.read('silva.xml'))
-            request = TestRequest()
-
-            importFromFile(import_file, import_root, request,
-                           zip_file=source_zip,
-                           replace=options.replace)
+        with open(options.file, 'r') as input_archive:
+            importer = ZipImporter(
+                import_root, TestRequest(),
+                {'replace': options.replace})
+            importer.importStream(input_archive)
