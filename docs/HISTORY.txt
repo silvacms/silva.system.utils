@@ -1,10 +1,12 @@
 Changes
 =======
 
-1.4 (unreleased)
+1.4 (2013/03/06)
 ----------------
 
-- ...
+- Add ``xml_import`` command.
+
+- Improve debugging of errors containing UTF-8 characters.
 
 1.3 (2012/12/11)
 ----------------

@@ -5,7 +5,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.4dev'
+version = '1.4'
 
 setup(name='silva.system.utils',
       version=version,
@@ -36,12 +36,13 @@ setup(name='silva.system.utils',
         'argparse',
         'infrae.wsgi',
         'setuptools',
+        'silva.core.xml',
         'silva.core.interfaces',
         'silva.core.services',
-        'silva.core.upgrade',
         'zope.component',
         'zope.location',
         'zope.security',
+        'zope.publisher',
         'zope.site',
         ],
       entry_points = """

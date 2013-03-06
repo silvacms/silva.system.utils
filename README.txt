@@ -56,6 +56,9 @@ Default commands
 ``zexp_import``
    Import a ZEXP file.
 
+``xml_import``
+   Import an Silva XML file.
+
 Code repository
 ===============
 
