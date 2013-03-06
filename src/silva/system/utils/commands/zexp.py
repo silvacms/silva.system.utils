@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2013  Infrae. All rights reserved.
+# See also LICENSE.txt
 
 from silva.system.utils.script import NEED_ZOPE_SESSION, NEED_SILVA_SESSION
 from silva.core.interfaces import IContainer
