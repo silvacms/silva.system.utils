@@ -33,14 +33,18 @@ class XmlImportCommand(object):
             help="replace content if it already exists.",
             action='store_true',
             default=False)
+        parser.add_argument(
+            '--ignore-top-level',
+            help='ignore top level container in the export.',
+            action='store_true',
+            default=False)
         parser.set_defaults(plugin=self)
 
     def run(self, root, options):
         try:
             import_root = root.restrictedTraverse(options.target)
         except KeyError as e:
-            logger.error('invalid target path : %s %s',
-                         options.target, e.args[0])
+            logger.error('invalid target path : %s %s', options.target, e.args[0])
             exit(1)
 
         if not IContainer.providedBy(import_root):
@@ -50,5 +54,6 @@ class XmlImportCommand(object):
         with open(options.file, 'r') as input_archive:
             importer = ZipImporter(
                 import_root, TestRequest(),
-                {'replace': options.replace})
+                {'replace_content': options.replace,
+                 'ignore_top_level_content': options.ignore_top_level})
             importer.importStream(input_archive)
