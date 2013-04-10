@@ -29,6 +29,9 @@ class XmlImportCommand(object):
             help='path in Silva where to import to, ex: /silvaroot/folder',
             default='/')
         parser.add_argument(
+            "-u", "--username",
+            help="username to login in order to import the xml (ZIP) file.")
+        parser.add_argument(
             '--replace',
             help="replace content if it already exists.",
             action='store_true',
