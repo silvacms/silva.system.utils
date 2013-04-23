@@ -53,6 +53,10 @@ class ManageCommand(object):
         if not options.identifier:
             fail(u"Please provide a site identifier")
         identifier = options.identifier
+        if ':' in identifier:
+            identifier, title = identifier.split(':', 1)
+        else:
+            title = identifier
         if options.delete:
             if identifier not in root.objectIds():
                 fail(
@@ -66,7 +70,7 @@ class ManageCommand(object):
                     u'There is already a Zope object identifier by "%s"',
                     identifier)
             factory = root.manage_addProduct['Silva']
-            factory.manage_addRoot(identifier, identifier)
+            factory.manage_addRoot(identifier, title)
             transaction.commit()
             logger.info(
                 u'Silva root "%s" added.', identifier)
