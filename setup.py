@@ -5,7 +5,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.4.2'
+version = '1.4.3dev'
 
 setup(name='silva.system.utils',
       version=version,
