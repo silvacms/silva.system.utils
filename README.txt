@@ -5,8 +5,8 @@ silva.system.utils
 Introduction
 ============
 
-This extension provides a script to help you manage Silva sites in the
-Zope instance from the command line. This will add script into the
+This extension provides a script to help you manage `Silva`_ sites in
+the Zope instance from the command line. This will add script into the
 ``bin`` directory of your installation called ``silva``.
 
 For most of the operations, the script requires you to provide the
@@ -64,3 +64,5 @@ Code repository
 
 The code source for this extension can be found in Mercurial at:
 https://hg.infrae.com/silva.system.utils/
+
+.. _Silva: http://silvacms.org/
