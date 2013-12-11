@@ -9,7 +9,7 @@ version = '1.4.3dev'
 
 setup(name='silva.system.utils',
       version=version,
-      description="command line utils to manage Silva sites",
+      description="Command line utils to manage Silva sites",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       classifiers=[
@@ -23,7 +23,7 @@ setup(name='silva.system.utils',
       keywords='system utils silva',
       author='Infrae',
       author_email='info@infrae.com',
-      url='https://hg.infrae.com/silva',
+      url='https://github.com/silvacms/silva.system.utils',
       license='BSD',
       package_dir={'': 'src'},
       packages=find_packages('src'),

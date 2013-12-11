@@ -62,7 +62,7 @@ Default commands
 Code repository
 ===============
 
-The code source for this extension can be found in Mercurial at:
-https://hg.infrae.com/silva.system.utils/
+The code source for this extension can be found in Git at:
+https://github.com/silvacms/silva.system.utils
 
 .. _Silva: http://silvacms.org/
